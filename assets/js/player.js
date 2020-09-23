@@ -145,7 +145,15 @@ window.addEventListener("message", function (e) {
 			    }
 			}
 			
-			//funcion que pega o tamanho de um arquivo pela url
+			//function que decodifica caracteres html de uma string
+			function htmlDecode(input){
+			  var e = document.createElement('textarea');
+			  e.innerHTML = input;
+			  // handle case of empty input
+			  return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+			}
+			
+			//function que pega o tamanho de um arquivo pela url
 			function setFileSize(url, element_id, needs_proxy) {
 				var proxy = "https://cors-anywhere.herokuapp.com/";
 				var fileSize = "";
@@ -214,7 +222,7 @@ window.addEventListener("message", function (e) {
 				//Se o episodio não for apenas para premium pega as urls de um jeito mais facil
 				if(is_ep_premium_only == false) {
 					video_dash_playlist_url_old = player_current_playlist.replace("master.m3u8","manifest.mpd").replace(player_current_playlist.split("/")[2], "dl.v.vrv.co").replace("evs1","evs");
-					video_dash_playlist_url = player_current_playlist.replace(player_current_playlist.split("/")[2], "v.vrv.co").replace("evs1", "evs").replace("amp;", "");
+					video_dash_playlist_url = htmlDecode(player_current_playlist.replace(player_current_playlist.split("/")[2], "v.vrv.co").replace("evs1", "evs"));
 
 					//console.log("Dash Playlist: " + video_dash_playlist_url);
 
