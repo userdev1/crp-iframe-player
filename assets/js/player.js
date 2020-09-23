@@ -275,7 +275,7 @@ window.addEventListener("message", function (e) {
 						type: "GET",
 						url: video_1080p_dash_playlist_url,
 						success: function (result,status,xhr) {
-							var params_download_link_1080p = html_decode(pegaString(xhr.responseText, '.m4s?', '"'));
+							var params_download_link_1080p = htmlDecode(pegaString(xhr.responseText, '.m4s?', '"'));
 							var video_1080p_mp4_url_old = video_1080p_dash_playlist_url.split("_,")[0] + "_" + video_1080p_dash_playlist_url.split(",")[1] + params_download_link_1080p;
 							var video_1080p_mp4_url = video_1080p_mp4_url_old.replace("dl.v.vrv.co", "a-vrv.akamaized.net");
 							
@@ -294,7 +294,7 @@ window.addEventListener("message", function (e) {
 						type: "GET",
 						url: video_720p_dash_playlist_url,
 						success: function (result,status,xhr) {
-							var params_download_link_720p = html_decode(pegaString(xhr.responseText, '.m4s?', '"'));
+							var params_download_link_720p = htmlDecode(pegaString(xhr.responseText, '.m4s?', '"'));
 							var video_720p_mp4_url_old = video_720p_dash_playlist_url.split("_,")[0] + "_" + video_720p_dash_playlist_url.split(",")[1] + params_download_link_720p;
 							var video_720p_mp4_url = video_720p_mp4_url_old.replace("dl.v.vrv.co", "a-vrv.akamaized.net");
 							
@@ -313,7 +313,7 @@ window.addEventListener("message", function (e) {
 						type: "GET",
 						url: video_480p_dash_playlist_url,
 						success: function (result,status,xhr) {
-							var params_download_link_480p = html_decode(pegaString(xhr.responseText, '.m4s?', '"'));
+							var params_download_link_480p = htmlDecode(pegaString(xhr.responseText, '.m4s?', '"'));
 							var video_480p_mp4_url_old = video_480p_dash_playlist_url.split("_,")[0] + "_" + video_480p_dash_playlist_url.split(",")[1] + params_download_link_480p;
 							var video_480p_mp4_url = video_480p_mp4_url_old.replace("dl.v.vrv.co", "a-vrv.akamaized.net");
 							
@@ -332,7 +332,7 @@ window.addEventListener("message", function (e) {
 						type: "GET",
 						url: video_360p_dash_playlist_url,
 						success: function (result,status,xhr) {
-							var params_download_link_360p = html_decode(pegaString(xhr.responseText, '.m4s?', '"'));
+							var params_download_link_360p = htmlDecode(pegaString(xhr.responseText, '.m4s?', '"'));
 							var video_360p_mp4_url_old = video_360p_dash_playlist_url.split("_,")[0] + "_" + video_360p_dash_playlist_url.split(",")[1] + params_download_link_360p;
 							var video_360p_mp4_url = video_360p_mp4_url_old.replace("dl.v.vrv.co", "a-vrv.akamaized.net");
 							
@@ -351,7 +351,7 @@ window.addEventListener("message", function (e) {
 						type: "GET",
 						url: video_240p_dash_playlist_url,
 						success: function (result,status,xhr) {
-							var params_download_link_240p = html_decode(pegaString(xhr.responseText, '.m4s?', '"'));
+							var params_download_link_240p = htmlDecode(pegaString(xhr.responseText, '.m4s?', '"'));
 							var video_240p_mp4_url_old = video_240p_dash_playlist_url.split("_,")[0] + "_" + video_240p_dash_playlist_url.split(",")[1] + params_download_link_240p;
 							var video_240p_mp4_url = video_240p_mp4_url_old.replace("dl.v.vrv.co", "a-vrv.akamaized.net");
 							
