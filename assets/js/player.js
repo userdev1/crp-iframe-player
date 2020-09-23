@@ -224,7 +224,7 @@ window.addEventListener("message", function (e) {
 					video_dash_playlist_url_old = player_current_playlist.replace("master.m3u8","manifest.mpd").replace(player_current_playlist.split("/")[2], "dl.v.vrv.co").replace("evs1","evs");
 					video_dash_playlist_url = htmlDecode(player_current_playlist.replace(player_current_playlist.split("/")[2], "v.vrv.co").replace("evs1", "evs"));
 
-					//console.log("Dash Playlist: " + video_dash_playlist_url);
+					console.log("Dash Playlist: " + video_dash_playlist_url);
 
 					$.ajax({
 						async: true,
