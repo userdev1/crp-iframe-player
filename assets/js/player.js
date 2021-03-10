@@ -252,7 +252,33 @@ window.addEventListener("message", function (e) {
 					return;
 				}
 
+				//Variaveis para o botao de abrir no MPC-HC.
+				var mpcButton_iconPath = "assets/icon/external-link.svg";
+				var mpcButton_tooltipText = "Abrir no MPC-HC";
+				var mpcButtonId = "mpc-hc-button";
+
+				//function ao clicar no botao de baixar
+				function mpc_ButtonClickAction() {
+					// var baseURL = 'iina://open?url=';
+					// var url = uri;
+					// var urlo = new URL(url);
+					// if (urlo.searchParams.get('list') != null) {
+					//  urlo.searchParams.forEach((_, key) => {
+					// 	if (key != 'list') { urlo.searchParams.delete(key);}
+					// 	console.log(key)
+					//  });
+					// }
+					// url = urlo.toString();
+					// var link = document.createElement('a');
+					// link.href=`${baseURL}${url}`;
+					// document.body.appendChild(link);
+					// link.click();
+					console.log(r)
+					return;
+				}
+
 				playerInstance.addButton(button_iconPath, button_tooltipText, () => download_ButtonClickAction(), buttonId);
+				playerInstance.addButton(mpcButton_iconPath, mpcButton_tooltipText, () => mpc_ButtonClickAction(), mpcButtonId);
 
 				// Definir URL e Tamanho na lista de download
 				for (let id in r) {
