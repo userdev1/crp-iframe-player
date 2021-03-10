@@ -1,14 +1,6 @@
 function createInvisibleLinkForMpc(videoUrl) {
 	var baseURL = 'iina://open?url=';
 	var url = videoUrl;
-	// var urlo = new URL(url);
-	// if (urlo.searchParams.get('list') != null) {
-	// 	urlo.searchParams.forEach((_, key) => {
-	// 	if (key != 'list') { urlo.searchParams.delete(key);}
-	// 	console.log(key)
-	// 	});
-	// }
-	// url = urlo.toString();
 	var link = document.createElement('a');
 	link.href=`${baseURL}${url}`;
 	link.id = 'mpc-hc-click-link';
@@ -241,7 +233,7 @@ window.addEventListener("message", function (e) {
 					"image": video_config_media['thumbnail']['url'],
 					"width": "100%",
 					"height": "100%",
-					"autostart": false,
+					"autostart": true,
 					"displayPlaybackLabel": true,
 					"primary": "html5"
 				});
@@ -276,6 +268,7 @@ window.addEventListener("message", function (e) {
 
 				//function ao clicar no botao de baixar
 				function mpc_ButtonClickAction() {
+					playerInstance.pause();
 					document.getElementById('mpc-hc-click-link').click();
 					return;
 				}
@@ -291,7 +284,6 @@ window.addEventListener("message", function (e) {
 
 				//Funções para o player
 				jwplayer().on('ready', e => {
-					console.log(u);
 					createInvisibleLinkForMpc(u[1]);
 					//Seta o tempo do video pro salvo no localStorage		
 					if (localStorage.getItem(video_id) != null) {
