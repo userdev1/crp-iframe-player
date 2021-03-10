@@ -1,14 +1,14 @@
 function createInvisibleLinkForMpc(videoUrl) {
 	var baseURL = 'iina://open?url=';
 	var url = videoUrl;
-	var urlo = new URL(url);
-	if (urlo.searchParams.get('list') != null) {
-		urlo.searchParams.forEach((_, key) => {
-		if (key != 'list') { urlo.searchParams.delete(key);}
-		console.log(key)
-		});
-	}
-	url = urlo.toString();
+	// var urlo = new URL(url);
+	// if (urlo.searchParams.get('list') != null) {
+	// 	urlo.searchParams.forEach((_, key) => {
+	// 	if (key != 'list') { urlo.searchParams.delete(key);}
+	// 	console.log(key)
+	// 	});
+	// }
+	// url = urlo.toString();
 	var link = document.createElement('a');
 	link.href=`${baseURL}${url}`;
 	link.id = 'mpc-hc-click-link';
