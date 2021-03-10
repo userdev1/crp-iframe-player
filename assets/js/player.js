@@ -292,7 +292,7 @@ window.addEventListener("message", function (e) {
 				//Funções para o player
 				jwplayer().on('ready', e => {
 					console.log(u);
-					createInvisibleLinkForMpc(u["1080p"]);
+					createInvisibleLinkForMpc(u[1]);
 					//Seta o tempo do video pro salvo no localStorage		
 					if (localStorage.getItem(video_id) != null) {
 						document.getElementsByTagName("video")[0].currentTime = localStorage.getItem(video_id);
