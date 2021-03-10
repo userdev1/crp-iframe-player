@@ -279,8 +279,6 @@ window.addEventListener("message", function (e) {
 					document.getElementById('mpc-hc-click-link').click();
 					return;
 				}
-				console.log(u["1080p"]);
-				createInvisibleLinkForMpc(u["1080p"]);
 
 				playerInstance.addButton(button_iconPath, button_tooltipText, () => download_ButtonClickAction(), buttonId);
 				playerInstance.addButton(mpcButton_iconPath, mpcButton_tooltipText, () => mpc_ButtonClickAction(), mpcButtonId);
@@ -293,6 +291,8 @@ window.addEventListener("message", function (e) {
 
 				//Funções para o player
 				jwplayer().on('ready', e => {
+					console.log(u);
+					createInvisibleLinkForMpc(u["1080p"]);
 					//Seta o tempo do video pro salvo no localStorage		
 					if (localStorage.getItem(video_id) != null) {
 						document.getElementsByTagName("video")[0].currentTime = localStorage.getItem(video_id);
