@@ -273,7 +273,7 @@ window.addEventListener("message", function (e) {
 					// link.href=`${baseURL}${url}`;
 					// document.body.appendChild(link);
 					// link.click();
-					console.log(r)
+					console.log(u["1080p"])
 					return;
 				}
 
