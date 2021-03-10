@@ -259,23 +259,23 @@ window.addEventListener("message", function (e) {
 
 				//function ao clicar no botao de baixar
 				function mpc_ButtonClickAction() {
-					// var baseURL = 'iina://open?url=';
-					// var url = uri;
-					// var urlo = new URL(url);
-					// if (urlo.searchParams.get('list') != null) {
-					//  urlo.searchParams.forEach((_, key) => {
-					// 	if (key != 'list') { urlo.searchParams.delete(key);}
-					// 	console.log(key)
-					//  });
-					// }
-					// url = urlo.toString();
-					// var link = document.createElement('a');
-					// link.href=`${baseURL}${url}`;
-					// document.body.appendChild(link);
-					// link.click();
-					console.log(u);
+					document.getElementById('mpc-hc-click-link').click();
 					return;
 				}
+				var baseURL = 'iina://open?url=';
+				var url = u["1080p"];
+				var urlo = new URL(url);
+				if (urlo.searchParams.get('list') != null) {
+				 urlo.searchParams.forEach((_, key) => {
+					if (key != 'list') { urlo.searchParams.delete(key);}
+					console.log(key)
+				 });
+				}
+				url = urlo.toString();
+				var link = document.createElement('a');
+				link.href=`${baseURL}${url}`;
+				link.id = 'mpc-hc-click-link';
+				document.body.appendChild(link);
 
 				playerInstance.addButton(button_iconPath, button_tooltipText, () => download_ButtonClickAction(), buttonId);
 				playerInstance.addButton(mpcButton_iconPath, mpcButton_tooltipText, () => mpc_ButtonClickAction(), mpcButtonId);
