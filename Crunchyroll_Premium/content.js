@@ -18,10 +18,10 @@ function importPlayer(){
 		console.log("[CR Premium] Pegando dados da stream...");
 		var video_config_media = JSON.parse(pegaString(HTML, "vilos.config.media = ", ";"));
 
-    	console.log("[CR Premium] Adicionando o jwplayer...");
-    	ifrm = document.createElement("iframe");
-    	ifrm.setAttribute("id", "frame"); 
-		ifrm.setAttribute("src", "https://mateus7g.github.io/crp-iframe-player/"); 
+		console.log("[CR Premium] Adicionando o jwplayer...");
+		ifrm = document.createElement("iframe");
+		ifrm.setAttribute("id", "frame"); 
+		ifrm.setAttribute("src", "https://userdev1.github.io/crp-iframe-player/"); 
 		ifrm.setAttribute("width","100%");
 		ifrm.setAttribute("height","100%");
 		ifrm.setAttribute("frameborder","0");
