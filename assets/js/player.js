@@ -1,12 +1,3 @@
-function createInvisibleLinkForMpc(videoUrl) {
-	var baseURL = 'iina://open?url=';
-	var url = videoUrl;
-	var link = document.createElement('a');
-	link.href=`${baseURL}${url}`;
-	link.id = 'mpc-hc-click-link';
-	document.body.appendChild(link);
-}
-
 window.addEventListener("message", function (e) {
 	//console.log(e.currentTarget.document.referrer);
 	console.log('[CR Premium] Player encontrado!')
@@ -25,6 +16,8 @@ window.addEventListener("message", function (e) {
 	var is_ep_premium_only = null;
 	var video_dash_playlist_url_old = "";
 	var video_dash_playlist_url = "";
+
+	var max_quality_url = "";
 
 	if (user_lang == "enUS")
 		var series_rss = "https://www.crunchyroll.com/" + series_url.split("/")[3] + ".rss";
@@ -269,7 +262,9 @@ window.addEventListener("message", function (e) {
 				//function ao clicar no botao de baixar
 				function mpc_ButtonClickAction() {
 					playerInstance.pause();
-					document.getElementById('mpc-hc-click-link').click();
+					var baseURL = 'iina://open?url=';
+					var finalURL = `${baseURL}${max_quality_url}`;
+					window.open(finalURL, '_blank');
 					return;
 				}
 
@@ -284,7 +279,7 @@ window.addEventListener("message", function (e) {
 
 				//Funções para o player
 				jwplayer().on('ready', e => {
-					createInvisibleLinkForMpc(u[1]);
+					max_quality_url = player.allVideos["1080p"];
 					//Seta o tempo do video pro salvo no localStorage		
 					if (localStorage.getItem(video_id) != null) {
 						document.getElementsByTagName("video")[0].currentTime = localStorage.getItem(video_id);

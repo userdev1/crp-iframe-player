@@ -65,8 +65,35 @@ function importPlayer(){
 }
 //function ao carregar pagina.
 function onloadfunction() {
-	if(pegaString(HTML, "vilos.config.media = ", ";") != null){
-		importPlayer();
+	if (window.location.href.includes('crunchyroll.com')) {
+		console.log('[CR Premium] Source: crunchyroll.com')
+		if(pegaString(HTML, "vilos.config.media = ", ";") != null){
+			importPlayer();
+		}
+	} else if (window.location.href.includes('crunchy-dl.com')) {
+		console.log('[CR Premium] Source: crunchy-dl.com');
+
+		var actualCode = `
+			var baseURL = 'iina://open?url=';
+			var url = player.allVideos["1080p"];
+			var finalURL = \`\${baseURL}\${url}\`
+
+			var mpcButton_iconPath = "https://userdev1.github.io/crp-iframe-player/assets/icon/external-link.svg";
+			var mpcButton_tooltipText = "Abrir no MPC-HC";
+			var mpcButtonId = "mpc-hc-button";
+
+			function mpc_ButtonClickAction() {
+				player.jw.pause();
+				window.open(finalURL, '_blank');
+				return;
+			}
+
+			player.jw.addButton(mpcButton_iconPath, mpcButton_tooltipText, () => mpc_ButtonClickAction(), mpcButtonId);
+		`;
+		var script = document.createElement('script');
+		script.textContent = actualCode;
+		(document.head||document.documentElement).appendChild(script);
+		script.remove();
 	}
 }
 document.addEventListener("DOMContentLoaded", onloadfunction());

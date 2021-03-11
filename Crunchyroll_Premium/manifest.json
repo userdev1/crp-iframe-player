@@ -10,14 +10,20 @@
 		"default_icon": "icon.png"
 	},
 	"permissions": [
-		  "storage"
-        ],
+		"storage",
+    "*://crunchy-dl.com/*"
+	],
 	"content_scripts": [
-    {
-        "matches": ["http://www.crunchyroll.com/*", "https://www.crunchyroll.com/*"],
-        "css": ["content.css"],
-        "js": ["content.js"]
-    }
-],
+		{
+			"matches": [
+				"http://www.crunchyroll.com/*",
+				"https://www.crunchyroll.com/*",
+				"http://crunchy-dl.com/*",
+				"https://crunchy-dl.com/*"
+			],
+			"css": ["content.css"],
+			"js": ["content.js"]
+		}
+	],
 	"manifest_version": 2
 }
