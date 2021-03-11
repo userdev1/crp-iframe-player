@@ -279,7 +279,7 @@ window.addEventListener("message", function (e) {
 
 				//Funções para o player
 				jwplayer().on('ready', e => {
-					max_quality_url = player.allVideos["1080p"];
+					max_quality_url = u[1];
 					//Seta o tempo do video pro salvo no localStorage		
 					if (localStorage.getItem(video_id) != null) {
 						document.getElementsByTagName("video")[0].currentTime = localStorage.getItem(video_id);
