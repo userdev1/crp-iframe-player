@@ -1,3 +1,4 @@
+window.va=2;
 window.addEventListener("message", function (e) {
 	//console.log(e.currentTarget.document.referrer);
 	console.log('[CR Premium] Player encontrado!')
@@ -24,6 +25,10 @@ window.addEventListener("message", function (e) {
 	else
 		var series_rss = "https://www.crunchyroll.com/" + series_url.split("/")[4] + ".rss";
 
+	window.vb=3;
+	window.va = video_config_media;
+	window.vev = e;
+	
 	for (var i = 0; i < video_config_media['streams'].length; i++) {
 		if (video_config_media['streams'][i].format == 'trailer_hls' && video_config_media['streams'][i].hardsub_lang == user_lang)
 			if (rows_number <= 4) {
@@ -31,6 +36,7 @@ window.addEventListener("message", function (e) {
 				rows_number++;
 			}
 		if (video_config_media['streams'][i].format == 'adaptive_hls' && video_config_media['streams'][i].hardsub_lang == user_lang) {
+			console.log(i);
 			video_stream_url = video_config_media['streams'][i].url.replace("pl.crunchyroll.com", "dl.v.vrv.co");
 			break;
 		}
@@ -110,14 +116,13 @@ window.addEventListener("message", function (e) {
 			function addSource(url, id, needs_proxy) {
 				var fileSize = "";
 				var http = (window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP"));
-				if (needs_proxy) final_url = crproxy + url;
+				if (needs_proxy == true) final_url = crproxy + url;
 				else final_url = url;
 
-				http.onreadystatechange = xhr => {
+				http.onreadystatechange = () => {
 					if (http.readyState == 4 && http.status == 200) {
 						fileSize = http.getResponseHeader('content-length');
 						if (!fileSize && !needs_proxy) {
-							console.log('- Source', r[id], 'precisa de proxy...')
 							addSource(url, id, true);
 						} else {
 							var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
@@ -130,12 +135,6 @@ window.addEventListener("message", function (e) {
 							pM2[id].resolve();
 							s[id] = return_fileSize;
 						}
-					} else if (http.readyState == 4 && http.status===0) {
-						console.log('- Source', r[id], 'precisa de proxy...')
-						addSource(url, id, true);
-					} else if (needs_proxy) {
-						console.log('Falha ao encontrar com proxy', r[id]);
-						return pM2[id].resolve('Falha com proxy')
 					}
 				}
 				http.open("HEAD", final_url, true);
@@ -144,36 +143,36 @@ window.addEventListener("message", function (e) {
 
 			//Se o episodio não for apenas para premium pega as urls de um jeito mais facil
 			if (is_ep_premium_only == false) {
-				function linkDownload(id) {		
-					console.log('- Baixando: ', r[id])
-					video_dash_playlist_url_old = player_current_playlist.replace("master.m3u8", "manifest.mpd").replace(player_current_playlist.split("/")[2], "dl.v.vrv.co").replace("evs1", "evs");
-					video_dash_playlist_url = player_current_playlist.replace(player_current_playlist.split("/")[2], "v.vrv.co").replace("evs1", "evs");
+				console.log('a', player_current_playlist);
+				video_dash_playlist_url_old = player_current_playlist.replace("master.m3u8", "manifest.mpd").replace(player_current_playlist.split("/")[2], "dl.v.vrv.co").replace("evs1", "evs");
+				console.log('b', video_dash_playlist_url_old);
+				video_dash_playlist_url = player_current_playlist.replace(player_current_playlist.split("/")[2], "v.vrv.co").replace("evs1", "evs");
+				console.log('c', video_dash_playlist_url);
 
-					$.ajax({
-						async: true,
-						type: "GET",
-						url: video_dash_playlist_url_old,
-						success: (result, status, xhr) => {
-							var params_download_link = htmlDecode(pegaString(xhr.responseText, '.m4s?', '"'));
-							if (!params_download_link)
-								return linkDownload(id);
-						
-							var video_code = video_dash_playlist_url.split(",")[parseInt(id)+1];
+				$.ajax({
+					async: true,
+					type: "GET",
+					url: video_dash_playlist_url_old,
+					success: (result, status, xhr) => {
+						var params_download_link = htmlDecode(pegaString(xhr.responseText, '.m4s?', '"'));
+
+						function linkDownload(id) {
+							console.log('- Reatualizando 0')
+							var video_code = video_dash_playlist_url.split(",")[id];
 							var video_mp4_url = video_dash_playlist_url.split("_,")[0] + "_" + video_code + params_download_link;
-							
 							u[id] = video_mp4_url;
 							pM1[id].resolve();
 						}
-					});
-				}
-				for (id in r)
-					linkDownload(id);
+
+						for (id in r)
+							linkDownload(id);
+					}
+				});
 			}
 
 			//Se o episodio for apenas para usuarios premium
 			if (is_ep_premium_only == true) {
 				function linkDownload(id) {
-					console.log('- Baixando: ', r[id])
 					var video_dash_playlist_url_no_clipe = video_m3u8_array[id].replace("/clipFrom/0000/clipTo/" + video_config_media['metadata']['duration'] + "/index.m3u8", ",.urlset/manifest.mpd");
 					var video_dash_playlist_url = video_dash_playlist_url_no_clipe.replace(video_dash_playlist_url_no_clipe.split("_")[0] + "_", video_dash_playlist_url_no_clipe.split("_")[0] + "_,");
 
@@ -199,24 +198,23 @@ window.addEventListener("message", function (e) {
 					linkDownload(id);
 			}
 
-			let sources = [];
 			Promise.all(p1).then(() => {
 				for (id in r)
 					addSource(u[id], id, false);
 				Promise.all(p2).then(() => {
-					for (i of [1, 0, 2, 3, 4]) {
-						const idx = i;
-						p2[idx].then(msg => {
-							if (msg) sources.push({ file: u[idx], label: r[idx] + '<sup><sup>Não encontrado</sup></sup>'})
-							else sources.push({ file: u[idx], label: r[idx] + (idx<2 ? '<sup><sup>HD</sup></sup>' : '')})
-						});
-					}
-
-					Promise.all(p2).then(()=>startPlayer());
+					startPlayer();
 				})
 			})
 
 			function startPlayer() {
+				sources = [
+					{ file: u[1], label: r[1] + '<sup><sup>HD</sup></sup>' },
+					{ file: u[0], label: r[0] + '<sup><sup>HD</sup></sup>' },
+					{ file: u[2], label: r[2] },
+					{ file: u[3], label: r[3] },
+					{ file: u[4], label: r[4] }
+				];
+
 				// Inicia o player
 				var playerInstance = jwplayer("player_div")
 				playerInstance.setup({
@@ -226,7 +224,7 @@ window.addEventListener("message", function (e) {
 					"image": video_config_media['thumbnail']['url'],
 					"width": "100%",
 					"height": "100%",
-					"autostart": true,
+					"autostart": false,
 					"displayPlaybackLabel": true,
 					"primary": "html5"
 				});
@@ -268,8 +266,8 @@ window.addEventListener("message", function (e) {
 					return;
 				}
 
-				playerInstance.addButton(button_iconPath, button_tooltipText, () => download_ButtonClickAction(), buttonId);
 				playerInstance.addButton(mpcButton_iconPath, mpcButton_tooltipText, () => mpc_ButtonClickAction(), mpcButtonId);
+				playerInstance.addButton(button_iconPath, button_tooltipText, () => download_ButtonClickAction(), buttonId);
 
 				// Definir URL e Tamanho na lista de download
 				for (let id in r) {
@@ -279,7 +277,6 @@ window.addEventListener("message", function (e) {
 
 				//Funções para o player
 				jwplayer().on('ready', e => {
-					max_quality_url = u[1];
 					//Seta o tempo do video pro salvo no localStorage		
 					if (localStorage.getItem(video_id) != null) {
 						document.getElementsByTagName("video")[0].currentTime = localStorage.getItem(video_id);
