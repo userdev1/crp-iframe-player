@@ -18,7 +18,7 @@ window.addEventListener("message", async e => {
 	let rgx = /http.*$/gm;
 	let streamrgx = /_,(\d+.mp4),(\d+.mp4),(\d+.mp4),(\d+.mp4),(\d+.mp4),.*?m3u8/;
 	let video_config_media = JSON.parse(e.data.video_config_media);
-	let allorigins = "https://crp-proxy.herokuapp.com/get?url=";
+	let allorigins = "https://night-cors.herokuapp.com/get?url=";
 	let video_id = video_config_media['metadata']['id'];
 	let up_next_cooldown = e.data.up_next_cooldown;
 	let up_next_enable = e.data.up_next_enable;
