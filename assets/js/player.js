@@ -177,8 +177,10 @@ window.addEventListener("message", async e => {
 		const updateModal = document.querySelectorAll(".modal")[1];
 		document.querySelectorAll("button.close-modal")[0].onclick = () =>
 			downloadModal.style.visibility = "hidden";
-		document.querySelectorAll("button.close-modal")[1].onclick = () =>
-			updateModal.style.visibility = "hidden";
+		if (document.querySelectorAll("button.close-modal")[1]) {
+			document.querySelectorAll("button.close-modal")[1].onclick = () =>
+				updateModal.style.visibility = "hidden";
+		}
 		if (user_lang[0] === 'ptBR')
 		document.getElementById('changelog').innerHTML = `<strong>Atualização disponível:</strong><br/>
 			- Add card <strong>A seguir</strong> & opções:<br/>
